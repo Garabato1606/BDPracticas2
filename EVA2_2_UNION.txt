@@ -1,0 +1,1960 @@
+MySQL Shell 8.0.12
+
+Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+
+ MySQL  SQL > \connect -c root@localhost
+The -c option is deprecated, please use --mysql or -mc instead
+Creating a Classic session to 'root@localhost'
+Please provide the password for 'root@localhost': ****
+Save password for 'root@localhost:3306'? [Y]es/[N]o/Ne[v]er (default No): y
+Fetching schema names for autocompletion... Press ^C to stop.
+Your MySQL connection id is 14
+Server version: 8.0.12 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+
+ MySQL  localhost:3306 ssl  SQL > \use northwind
+Default schema set to `northwind`.
+Fetching table and column names from `northwind` for auto-completion... Press ^C to stop.
+
+ MySQL  localhost:3306 ssl  northwind  SQL > selec * from customer;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selec * from customer' at line 1
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select * from customer;
+ERROR: 1146 (42S02): Table 'northwind.customer' doesn't exist
+
+ MySQL  localhost:3306 ssl  northwind  SQL > coutn (*) from actor;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'coutn (*) from actor' at line 1
+
+ MySQL  localhost:3306 ssl  northwind  SQL > count(*) from actor;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'count(*) from actor' at line 1
+
+ MySQL  localhost:3306 ssl  northwind  SQL > \use sakila
+Default schema set to `sakila`.
+Fetching table and column names from `sakila` for auto-completion... Press ^C to stop.
+
+ MySQL  localhost:3306 ssl  sakila  SQL > show tables;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0020 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select count(*) from actor;
++----------+
+| count(*) |
++----------+
+|      200 |
++----------+
+1 row in set (0.1502 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select count(*) from staff;
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.1221 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > descc actor;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'descc actor' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > desc actor;
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| Field       | Type                 | Null | Key | Default           | Extra                       |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| actor_id    | smallint(5) unsigned | NO   | PRI | NULL              | auto_increment              |
+| first_name  | varchar(45)          | NO   |     | NULL              |                             |
+| last_name   | varchar(45)          | NO   | MUL | NULL              |                             |
+| last_update | timestamp            | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+4 rows in set (0.0021 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > desc staff;
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| Field       | Type                 | Null | Key | Default           | Extra                       |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| staff_id    | tinyint(3) unsigned  | NO   | PRI | NULL              | auto_increment              |
+| first_name  | varchar(45)          | NO   |     | NULL              |                             |
+| last_name   | varchar(45)          | NO   |     | NULL              |                             |
+| address_id  | smallint(5) unsigned | NO   | MUL | NULL              |                             |
+| picture     | blob                 | YES  |     | NULL              |                             |
+| email       | varchar(50)          | YES  |     | NULL              |                             |
+| store_id    | tinyint(3) unsigned  | NO   | MUL | NULL              |                             |
+| active      | tinyint(1)           | NO   |     | 1                 |                             |
+| username    | varchar(16)          | NO   |     | NULL              |                             |
+| password    | varchar(40)          | YES  |     | NULL              |                             |
+| last_update | timestamp            | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+11 rows in set (0.0020 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > desc customer;
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| Field       | Type                 | Null | Key | Default           | Extra                       |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| customer_id | smallint(5) unsigned | NO   | PRI | NULL              | auto_increment              |
+| store_id    | tinyint(3) unsigned  | NO   | MUL | NULL              |                             |
+| first_name  | varchar(45)          | NO   |     | NULL              |                             |
+| last_name   | varchar(45)          | NO   | MUL | NULL              |                             |
+| email       | varchar(50)          | YES  |     | NULL              |                             |
+| address_id  | smallint(5) unsigned | NO   | MUL | NULL              |                             |
+| active      | tinyint(1)           | NO   |     | 1                 |                             |
+| create_date | datetime             | NO   |     | NULL              |                             |
+| last_update | timestamp            | YES  |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+9 rows in set (0.0018 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor;
++-------------+--------------+
+| first_name  | last_name    |
++-------------+--------------+
+| PENELOPE    | GUINESS      |
+| NICK        | WAHLBERG     |
+| ED          | CHASE        |
+| JENNIFER    | DAVIS        |
+| JOHNNY      | LOLLOBRIGIDA |
+| BETTE       | NICHOLSON    |
+| GRACE       | MOSTEL       |
+| MATTHEW     | JOHANSSON    |
+| JOE         | SWANK        |
+| CHRISTIAN   | GABLE        |
+| ZERO        | CAGE         |
+| KARL        | BERRY        |
+| UMA         | WOOD         |
+| VIVIEN      | BERGEN       |
+| CUBA        | OLIVIER      |
+| FRED        | COSTNER      |
+| HELEN       | VOIGHT       |
+| DAN         | TORN         |
+| BOB         | FAWCETT      |
+| LUCILLE     | TRACY        |
+| KIRSTEN     | PALTROW      |
+| ELVIS       | MARX         |
+| SANDRA      | KILMER       |
+| CAMERON     | STREEP       |
+| KEVIN       | BLOOM        |
+| RIP         | CRAWFORD     |
+| JULIA       | MCQUEEN      |
+| WOODY       | HOFFMAN      |
+| ALEC        | WAYNE        |
+| SANDRA      | PECK         |
+| SISSY       | SOBIESKI     |
+| TIM         | HACKMAN      |
+| MILLA       | PECK         |
+| AUDREY      | OLIVIER      |
+| JUDY        | DEAN         |
+| BURT        | DUKAKIS      |
+| VAL         | BOLGER       |
+| TOM         | MCKELLEN     |
+| GOLDIE      | BRODY        |
+| JOHNNY      | CAGE         |
+| JODIE       | DEGENERES    |
+| TOM         | MIRANDA      |
+| KIRK        | JOVOVICH     |
+| NICK        | STALLONE     |
+| REESE       | KILMER       |
+| PARKER      | GOLDBERG     |
+| JULIA       | BARRYMORE    |
+| FRANCES     | DAY-LEWIS    |
+| ANNE        | CRONYN       |
+| NATALIE     | HOPKINS      |
+| GARY        | PHOENIX      |
+| CARMEN      | HUNT         |
+| MENA        | TEMPLE       |
+| PENELOPE    | PINKETT      |
+| FAY         | KILMER       |
+| DAN         | HARRIS       |
+| JUDE        | CRUISE       |
+| CHRISTIAN   | AKROYD       |
+| DUSTIN      | TAUTOU       |
+| HENRY       | BERRY        |
+| CHRISTIAN   | NEESON       |
+| JAYNE       | NEESON       |
+| CAMERON     | WRAY         |
+| RAY         | JOHANSSON    |
+| ANGELA      | HUDSON       |
+| MARY        | TANDY        |
+| JESSICA     | BAILEY       |
+| RIP         | WINSLET      |
+| KENNETH     | PALTROW      |
+| MICHELLE    | MCCONAUGHEY  |
+| ADAM        | GRANT        |
+| SEAN        | WILLIAMS     |
+| GARY        | PENN         |
+| MILLA       | KEITEL       |
+| BURT        | POSEY        |
+| ANGELINA    | ASTAIRE      |
+| CARY        | MCCONAUGHEY  |
+| GROUCHO     | SINATRA      |
+| MAE         | HOFFMAN      |
+| RALPH       | CRUZ         |
+| SCARLETT    | DAMON        |
+| WOODY       | JOLIE        |
+| BEN         | WILLIS       |
+| JAMES       | PITT         |
+| MINNIE      | ZELLWEGER    |
+| GREG        | CHAPLIN      |
+| SPENCER     | PECK         |
+| KENNETH     | PESCI        |
+| CHARLIZE    | DENCH        |
+| SEAN        | GUINESS      |
+| CHRISTOPHER | BERRY        |
+| KIRSTEN     | AKROYD       |
+| ELLEN       | PRESLEY      |
+| KENNETH     | TORN         |
+| DARYL       | WAHLBERG     |
+| GENE        | WILLIS       |
+| MEG         | HAWKE        |
+| CHRIS       | BRIDGES      |
+| JIM         | MOSTEL       |
+| SPENCER     | DEPP         |
+| SUSAN       | DAVIS        |
+| WALTER      | TORN         |
+| MATTHEW     | LEIGH        |
+| PENELOPE    | CRONYN       |
+| SIDNEY      | CROWE        |
+| GROUCHO     | DUNST        |
+| GINA        | DEGENERES    |
+| WARREN      | NOLTE        |
+| SYLVESTER   | DERN         |
+| SUSAN       | DAVIS        |
+| CAMERON     | ZELLWEGER    |
+| RUSSELL     | BACALL       |
+| MORGAN      | HOPKINS      |
+| MORGAN      | MCDORMAND    |
+| HARRISON    | BALE         |
+| DAN         | STREEP       |
+| RENEE       | TRACY        |
+| CUBA        | ALLEN        |
+| WARREN      | JACKMAN      |
+| PENELOPE    | MONROE       |
+| LIZA        | BERGMAN      |
+| SALMA       | NOLTE        |
+| JULIANNE    | DENCH        |
+| SCARLETT    | BENING       |
+| ALBERT      | NOLTE        |
+| FRANCES     | TOMEI        |
+| KEVIN       | GARLAND      |
+| CATE        | MCQUEEN      |
+| DARYL       | CRAWFORD     |
+| GRETA       | KEITEL       |
+| JANE        | JACKMAN      |
+| ADAM        | HOPPER       |
+| RICHARD     | PENN         |
+| GENE        | HOPKINS      |
+| RITA        | REYNOLDS     |
+| ED          | MANSFIELD    |
+| MORGAN      | WILLIAMS     |
+| LUCILLE     | DEE          |
+| EWAN        | GOODING      |
+| WHOOPI      | HURT         |
+| CATE        | HARRIS       |
+| JADA        | RYDER        |
+| RIVER       | DEAN         |
+| ANGELA      | WITHERSPOON  |
+| KIM         | ALLEN        |
+| ALBERT      | JOHANSSON    |
+| FAY         | WINSLET      |
+| EMILY       | DEE          |
+| RUSSELL     | TEMPLE       |
+| JAYNE       | NOLTE        |
+| GEOFFREY    | HESTON       |
+| BEN         | HARRIS       |
+| MINNIE      | KILMER       |
+| MERYL       | GIBSON       |
+| IAN         | TANDY        |
+| FAY         | WOOD         |
+| GRETA       | MALDEN       |
+| VIVIEN      | BASINGER     |
+| LAURA       | BRODY        |
+| CHRIS       | DEPP         |
+| HARVEY      | HOPE         |
+| OPRAH       | KILMER       |
+| CHRISTOPHER | WEST         |
+| HUMPHREY    | WILLIS       |
+| AL          | GARLAND      |
+| NICK        | DEGENERES    |
+| LAURENCE    | BULLOCK      |
+| WILL        | WILSON       |
+| KENNETH     | HOFFMAN      |
+| MENA        | HOPPER       |
+| OLYMPIA     | PFEIFFER     |
+| GROUCHO     | WILLIAMS     |
+| ALAN        | DREYFUSS     |
+| MICHAEL     | BENING       |
+| WILLIAM     | HACKMAN      |
+| JON         | CHASE        |
+| GENE        | MCKELLEN     |
+| LISA        | MONROE       |
+| ED          | GUINESS      |
+| JEFF        | SILVERSTONE  |
+| MATTHEW     | CARREY       |
+| DEBBIE      | AKROYD       |
+| RUSSELL     | CLOSE        |
+| HUMPHREY    | GARLAND      |
+| MICHAEL     | BOLGER       |
+| JULIA       | ZELLWEGER    |
+| RENEE       | BALL         |
+| ROCK        | DUKAKIS      |
+| CUBA        | BIRCH        |
+| AUDREY      | BAILEY       |
+| GREGORY     | GOODING      |
+| JOHN        | SUVARI       |
+| BURT        | TEMPLE       |
+| MERYL       | ALLEN        |
+| JAYNE       | SILVERSTONE  |
+| BELA        | WALKEN       |
+| REESE       | WEST         |
+| MARY        | KEITEL       |
+| JULIA       | FAWCETT      |
+| THORA       | TEMPLE       |
++-------------+--------------+
+200 rows in set (0.0008 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select count(*) from actor;
++----------+
+| count(*) |
++----------+
+|      200 |
++----------+
+1 row in set (0.0007 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select count(*) from staff;
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.0005 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select count(*) from customer;
++----------+
+| count(*) |
++----------+
+|      599 |
++----------+
+1 row in set (0.1811 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor limit 10;
++------------+--------------+
+| first_name | last_name    |
++------------+--------------+
+| PENELOPE   | GUINESS      |
+| NICK       | WAHLBERG     |
+| ED         | CHASE        |
+| JENNIFER   | DAVIS        |
+| JOHNNY     | LOLLOBRIGIDA |
+| BETTE      | NICHOLSON    |
+| GRACE      | MOSTEL       |
+| MATTHEW    | JOHANSSON    |
+| JOE        | SWANK        |
+| CHRISTIAN  | GABLE        |
++------------+--------------+
+10 rows in set (0.0005 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor oder by last_name limit 1;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'by last_name limit 1' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor order by last_name limit 1;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| CHRISTIAN  | AKROYD    |
++------------+-----------+
+1 row in set (0.0258 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor order by last_name desc limit 1;
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| JULIA      | ZELLWEGER |
++------------+-----------+
+1 row in set (0.0005 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > \use evaluacion_2
+Default schema set to `evaluacion_2`.
+Fetching table and column names from `evaluacion_2` for auto-completion... Press ^C to stop.
+
+ MySQL  localhost:3306 ssl  evaluacion_2  SQL > show tables;
++------------------------+
+| Tables_in_evaluacion_2 |
++------------------------+
+| a                      |
+| b                      |
++------------------------+
+2 rows in set (0.0016 sec)
+
+ MySQL  localhost:3306 ssl  evaluacion_2  SQL > select * from a
+                                            ... ;
++--------+
+| nombre |
++--------+
+| 1      |
+| 2      |
+| 3      |
+| 4      |
+| 5      |
+| A      |
+| B      |
+| C      |
+| D      |
+| E      |
++--------+
+10 rows in set (0.0008 sec)
+
+ MySQL  localhost:3306 ssl  evaluacion_2  SQL > select * from b ;
++--------+
+| bombre |
++--------+
+| A      |
+| B      |
+| C      |
+| D      |
+| E      |
++--------+
+5 rows in set (0.0007 sec)
+
+ MySQL  localhost:3306 ssl  evaluacion_2  SQL > select * from a
+                                            ... union
+                                            ... select * from b;
++--------+
+| nombre |
++--------+
+| 1      |
+| 2      |
+| 3      |
+| 4      |
+| 5      |
+| A      |
+| B      |
+| C      |
+| D      |
+| E      |
++--------+
+10 rows in set (0.1042 sec)
+
+ MySQL  localhost:3306 ssl  evaluacion_2  SQL > select 'A', nombre from a union select 'b', bombre from b;
++---+--------+
+| A | nombre |
++---+--------+
+| A | 1      |
+| A | 2      |
+| A | 3      |
+| A | 4      |
+| A | 5      |
+| A | A      |
+| A | B      |
+| A | C      |
+| A | D      |
+| A | E      |
+| b | A      |
+| b | B      |
+| b | C      |
+| b | D      |
+| b | E      |
++---+--------+
+15 rows in set (0.0010 sec)
+
+ MySQL  localhost:3306 ssl  evaluacion_2  SQL > \use sakila
+Default schema set to `sakila`.
+Fetching table and column names from `sakila` for auto-completion... Press ^C to stop.
+
+ MySQL  localhost:3306 ssl  sakila  SQL > show tables;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0018 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor
+                                      ... union
+                                      ... select first_name, last_name from staff;
++-------------+--------------+
+| first_name  | last_name    |
++-------------+--------------+
+| PENELOPE    | GUINESS      |
+| NICK        | WAHLBERG     |
+| ED          | CHASE        |
+| JENNIFER    | DAVIS        |
+| JOHNNY      | LOLLOBRIGIDA |
+| BETTE       | NICHOLSON    |
+| GRACE       | MOSTEL       |
+| MATTHEW     | JOHANSSON    |
+| JOE         | SWANK        |
+| CHRISTIAN   | GABLE        |
+| ZERO        | CAGE         |
+| KARL        | BERRY        |
+| UMA         | WOOD         |
+| VIVIEN      | BERGEN       |
+| CUBA        | OLIVIER      |
+| FRED        | COSTNER      |
+| HELEN       | VOIGHT       |
+| DAN         | TORN         |
+| BOB         | FAWCETT      |
+| LUCILLE     | TRACY        |
+| KIRSTEN     | PALTROW      |
+| ELVIS       | MARX         |
+| SANDRA      | KILMER       |
+| CAMERON     | STREEP       |
+| KEVIN       | BLOOM        |
+| RIP         | CRAWFORD     |
+| JULIA       | MCQUEEN      |
+| WOODY       | HOFFMAN      |
+| ALEC        | WAYNE        |
+| SANDRA      | PECK         |
+| SISSY       | SOBIESKI     |
+| TIM         | HACKMAN      |
+| MILLA       | PECK         |
+| AUDREY      | OLIVIER      |
+| JUDY        | DEAN         |
+| BURT        | DUKAKIS      |
+| VAL         | BOLGER       |
+| TOM         | MCKELLEN     |
+| GOLDIE      | BRODY        |
+| JOHNNY      | CAGE         |
+| JODIE       | DEGENERES    |
+| TOM         | MIRANDA      |
+| KIRK        | JOVOVICH     |
+| NICK        | STALLONE     |
+| REESE       | KILMER       |
+| PARKER      | GOLDBERG     |
+| JULIA       | BARRYMORE    |
+| FRANCES     | DAY-LEWIS    |
+| ANNE        | CRONYN       |
+| NATALIE     | HOPKINS      |
+| GARY        | PHOENIX      |
+| CARMEN      | HUNT         |
+| MENA        | TEMPLE       |
+| PENELOPE    | PINKETT      |
+| FAY         | KILMER       |
+| DAN         | HARRIS       |
+| JUDE        | CRUISE       |
+| CHRISTIAN   | AKROYD       |
+| DUSTIN      | TAUTOU       |
+| HENRY       | BERRY        |
+| CHRISTIAN   | NEESON       |
+| JAYNE       | NEESON       |
+| CAMERON     | WRAY         |
+| RAY         | JOHANSSON    |
+| ANGELA      | HUDSON       |
+| MARY        | TANDY        |
+| JESSICA     | BAILEY       |
+| RIP         | WINSLET      |
+| KENNETH     | PALTROW      |
+| MICHELLE    | MCCONAUGHEY  |
+| ADAM        | GRANT        |
+| SEAN        | WILLIAMS     |
+| GARY        | PENN         |
+| MILLA       | KEITEL       |
+| BURT        | POSEY        |
+| ANGELINA    | ASTAIRE      |
+| CARY        | MCCONAUGHEY  |
+| GROUCHO     | SINATRA      |
+| MAE         | HOFFMAN      |
+| RALPH       | CRUZ         |
+| SCARLETT    | DAMON        |
+| WOODY       | JOLIE        |
+| BEN         | WILLIS       |
+| JAMES       | PITT         |
+| MINNIE      | ZELLWEGER    |
+| GREG        | CHAPLIN      |
+| SPENCER     | PECK         |
+| KENNETH     | PESCI        |
+| CHARLIZE    | DENCH        |
+| SEAN        | GUINESS      |
+| CHRISTOPHER | BERRY        |
+| KIRSTEN     | AKROYD       |
+| ELLEN       | PRESLEY      |
+| KENNETH     | TORN         |
+| DARYL       | WAHLBERG     |
+| GENE        | WILLIS       |
+| MEG         | HAWKE        |
+| CHRIS       | BRIDGES      |
+| JIM         | MOSTEL       |
+| SPENCER     | DEPP         |
+| SUSAN       | DAVIS        |
+| WALTER      | TORN         |
+| MATTHEW     | LEIGH        |
+| PENELOPE    | CRONYN       |
+| SIDNEY      | CROWE        |
+| GROUCHO     | DUNST        |
+| GINA        | DEGENERES    |
+| WARREN      | NOLTE        |
+| SYLVESTER   | DERN         |
+| CAMERON     | ZELLWEGER    |
+| RUSSELL     | BACALL       |
+| MORGAN      | HOPKINS      |
+| MORGAN      | MCDORMAND    |
+| HARRISON    | BALE         |
+| DAN         | STREEP       |
+| RENEE       | TRACY        |
+| CUBA        | ALLEN        |
+| WARREN      | JACKMAN      |
+| PENELOPE    | MONROE       |
+| LIZA        | BERGMAN      |
+| SALMA       | NOLTE        |
+| JULIANNE    | DENCH        |
+| SCARLETT    | BENING       |
+| ALBERT      | NOLTE        |
+| FRANCES     | TOMEI        |
+| KEVIN       | GARLAND      |
+| CATE        | MCQUEEN      |
+| DARYL       | CRAWFORD     |
+| GRETA       | KEITEL       |
+| JANE        | JACKMAN      |
+| ADAM        | HOPPER       |
+| RICHARD     | PENN         |
+| GENE        | HOPKINS      |
+| RITA        | REYNOLDS     |
+| ED          | MANSFIELD    |
+| MORGAN      | WILLIAMS     |
+| LUCILLE     | DEE          |
+| EWAN        | GOODING      |
+| WHOOPI      | HURT         |
+| CATE        | HARRIS       |
+| JADA        | RYDER        |
+| RIVER       | DEAN         |
+| ANGELA      | WITHERSPOON  |
+| KIM         | ALLEN        |
+| ALBERT      | JOHANSSON    |
+| FAY         | WINSLET      |
+| EMILY       | DEE          |
+| RUSSELL     | TEMPLE       |
+| JAYNE       | NOLTE        |
+| GEOFFREY    | HESTON       |
+| BEN         | HARRIS       |
+| MINNIE      | KILMER       |
+| MERYL       | GIBSON       |
+| IAN         | TANDY        |
+| FAY         | WOOD         |
+| GRETA       | MALDEN       |
+| VIVIEN      | BASINGER     |
+| LAURA       | BRODY        |
+| CHRIS       | DEPP         |
+| HARVEY      | HOPE         |
+| OPRAH       | KILMER       |
+| CHRISTOPHER | WEST         |
+| HUMPHREY    | WILLIS       |
+| AL          | GARLAND      |
+| NICK        | DEGENERES    |
+| LAURENCE    | BULLOCK      |
+| WILL        | WILSON       |
+| KENNETH     | HOFFMAN      |
+| MENA        | HOPPER       |
+| OLYMPIA     | PFEIFFER     |
+| GROUCHO     | WILLIAMS     |
+| ALAN        | DREYFUSS     |
+| MICHAEL     | BENING       |
+| WILLIAM     | HACKMAN      |
+| JON         | CHASE        |
+| GENE        | MCKELLEN     |
+| LISA        | MONROE       |
+| ED          | GUINESS      |
+| JEFF        | SILVERSTONE  |
+| MATTHEW     | CARREY       |
+| DEBBIE      | AKROYD       |
+| RUSSELL     | CLOSE        |
+| HUMPHREY    | GARLAND      |
+| MICHAEL     | BOLGER       |
+| JULIA       | ZELLWEGER    |
+| RENEE       | BALL         |
+| ROCK        | DUKAKIS      |
+| CUBA        | BIRCH        |
+| AUDREY      | BAILEY       |
+| GREGORY     | GOODING      |
+| JOHN        | SUVARI       |
+| BURT        | TEMPLE       |
+| MERYL       | ALLEN        |
+| JAYNE       | SILVERSTONE  |
+| BELA        | WALKEN       |
+| REESE       | WEST         |
+| MARY        | KEITEL       |
+| JULIA       | FAWCETT      |
+| THORA       | TEMPLE       |
+| Mike        | Hillyer      |
+| Jon         | Stephens     |
++-------------+--------------+
+201 rows in set (0.0011 sec)
+                                          select 'Actores', first_name, last_name from a union select 'b', bombre from b;MySQL  localhost:3306 ssl  sakila  SQL > select 'Actores', first_name, last_nam from a union select 'b', bombre from b;ERROR: 1146 (42S02): Table 'sakila.a' doesn't exist
+
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'Actores', first_name, last_name from a union select 'Starr', bombre from b;L  localhost:3306 ssl  sakila  SQL > select 'Actores', first_name, last_name from a union select '', bombre from b;ERROR: 1146 (42S02): Table 'sakila.a' doesn't exist
+                                          select 'Actores', first_name, last_name from a union select 'Staff',  from b;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from b' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'Actores', first_name, last_name from a union select 'Staff', fris  from b;QL  localhost:3306 ssl  sakila  SQL > select
+ERROR: 1146 (42S02): Table 'sakila.a' doesn't existct 'Staff',   from b;
+
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL >
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'Actores', first_name, last_name from Actor union select 'Staff', first_name, last_name  from Staff;
++---------+-------------+--------------+
+| Actores | first_name  | last_name    |
++---------+-------------+--------------+
+| Actores | PENELOPE    | GUINESS      |
+| Actores | NICK        | WAHLBERG     |
+| Actores | ED          | CHASE        |
+| Actores | JENNIFER    | DAVIS        |
+| Actores | JOHNNY      | LOLLOBRIGIDA |
+| Actores | BETTE       | NICHOLSON    |
+| Actores | GRACE       | MOSTEL       |
+| Actores | MATTHEW     | JOHANSSON    |
+| Actores | JOE         | SWANK        |
+| Actores | CHRISTIAN   | GABLE        |
+| Actores | ZERO        | CAGE         |
+| Actores | KARL        | BERRY        |
+| Actores | UMA         | WOOD         |
+| Actores | VIVIEN      | BERGEN       |
+| Actores | CUBA        | OLIVIER      |
+| Actores | FRED        | COSTNER      |
+| Actores | HELEN       | VOIGHT       |
+| Actores | DAN         | TORN         |
+| Actores | BOB         | FAWCETT      |
+| Actores | LUCILLE     | TRACY        |
+| Actores | KIRSTEN     | PALTROW      |
+| Actores | ELVIS       | MARX         |
+| Actores | SANDRA      | KILMER       |
+| Actores | CAMERON     | STREEP       |
+| Actores | KEVIN       | BLOOM        |
+| Actores | RIP         | CRAWFORD     |
+| Actores | JULIA       | MCQUEEN      |
+| Actores | WOODY       | HOFFMAN      |
+| Actores | ALEC        | WAYNE        |
+| Actores | SANDRA      | PECK         |
+| Actores | SISSY       | SOBIESKI     |
+| Actores | TIM         | HACKMAN      |
+| Actores | MILLA       | PECK         |
+| Actores | AUDREY      | OLIVIER      |
+| Actores | JUDY        | DEAN         |
+| Actores | BURT        | DUKAKIS      |
+| Actores | VAL         | BOLGER       |
+| Actores | TOM         | MCKELLEN     |
+| Actores | GOLDIE      | BRODY        |
+| Actores | JOHNNY      | CAGE         |
+| Actores | JODIE       | DEGENERES    |
+| Actores | TOM         | MIRANDA      |
+| Actores | KIRK        | JOVOVICH     |
+| Actores | NICK        | STALLONE     |
+| Actores | REESE       | KILMER       |
+| Actores | PARKER      | GOLDBERG     |
+| Actores | JULIA       | BARRYMORE    |
+| Actores | FRANCES     | DAY-LEWIS    |
+| Actores | ANNE        | CRONYN       |
+| Actores | NATALIE     | HOPKINS      |
+| Actores | GARY        | PHOENIX      |
+| Actores | CARMEN      | HUNT         |
+| Actores | MENA        | TEMPLE       |
+| Actores | PENELOPE    | PINKETT      |
+| Actores | FAY         | KILMER       |
+| Actores | DAN         | HARRIS       |
+| Actores | JUDE        | CRUISE       |
+| Actores | CHRISTIAN   | AKROYD       |
+| Actores | DUSTIN      | TAUTOU       |
+| Actores | HENRY       | BERRY        |
+| Actores | CHRISTIAN   | NEESON       |
+| Actores | JAYNE       | NEESON       |
+| Actores | CAMERON     | WRAY         |
+| Actores | RAY         | JOHANSSON    |
+| Actores | ANGELA      | HUDSON       |
+| Actores | MARY        | TANDY        |
+| Actores | JESSICA     | BAILEY       |
+| Actores | RIP         | WINSLET      |
+| Actores | KENNETH     | PALTROW      |
+| Actores | MICHELLE    | MCCONAUGHEY  |
+| Actores | ADAM        | GRANT        |
+| Actores | SEAN        | WILLIAMS     |
+| Actores | GARY        | PENN         |
+| Actores | MILLA       | KEITEL       |
+| Actores | BURT        | POSEY        |
+| Actores | ANGELINA    | ASTAIRE      |
+| Actores | CARY        | MCCONAUGHEY  |
+| Actores | GROUCHO     | SINATRA      |
+| Actores | MAE         | HOFFMAN      |
+| Actores | RALPH       | CRUZ         |
+| Actores | SCARLETT    | DAMON        |
+| Actores | WOODY       | JOLIE        |
+| Actores | BEN         | WILLIS       |
+| Actores | JAMES       | PITT         |
+| Actores | MINNIE      | ZELLWEGER    |
+| Actores | GREG        | CHAPLIN      |
+| Actores | SPENCER     | PECK         |
+| Actores | KENNETH     | PESCI        |
+| Actores | CHARLIZE    | DENCH        |
+| Actores | SEAN        | GUINESS      |
+| Actores | CHRISTOPHER | BERRY        |
+| Actores | KIRSTEN     | AKROYD       |
+| Actores | ELLEN       | PRESLEY      |
+| Actores | KENNETH     | TORN         |
+| Actores | DARYL       | WAHLBERG     |
+| Actores | GENE        | WILLIS       |
+| Actores | MEG         | HAWKE        |
+| Actores | CHRIS       | BRIDGES      |
+| Actores | JIM         | MOSTEL       |
+| Actores | SPENCER     | DEPP         |
+| Actores | SUSAN       | DAVIS        |
+| Actores | WALTER      | TORN         |
+| Actores | MATTHEW     | LEIGH        |
+| Actores | PENELOPE    | CRONYN       |
+| Actores | SIDNEY      | CROWE        |
+| Actores | GROUCHO     | DUNST        |
+| Actores | GINA        | DEGENERES    |
+| Actores | WARREN      | NOLTE        |
+| Actores | SYLVESTER   | DERN         |
+| Actores | CAMERON     | ZELLWEGER    |
+| Actores | RUSSELL     | BACALL       |
+| Actores | MORGAN      | HOPKINS      |
+| Actores | MORGAN      | MCDORMAND    |
+| Actores | HARRISON    | BALE         |
+| Actores | DAN         | STREEP       |
+| Actores | RENEE       | TRACY        |
+| Actores | CUBA        | ALLEN        |
+| Actores | WARREN      | JACKMAN      |
+| Actores | PENELOPE    | MONROE       |
+| Actores | LIZA        | BERGMAN      |
+| Actores | SALMA       | NOLTE        |
+| Actores | JULIANNE    | DENCH        |
+| Actores | SCARLETT    | BENING       |
+| Actores | ALBERT      | NOLTE        |
+| Actores | FRANCES     | TOMEI        |
+| Actores | KEVIN       | GARLAND      |
+| Actores | CATE        | MCQUEEN      |
+| Actores | DARYL       | CRAWFORD     |
+| Actores | GRETA       | KEITEL       |
+| Actores | JANE        | JACKMAN      |
+| Actores | ADAM        | HOPPER       |
+| Actores | RICHARD     | PENN         |
+| Actores | GENE        | HOPKINS      |
+| Actores | RITA        | REYNOLDS     |
+| Actores | ED          | MANSFIELD    |
+| Actores | MORGAN      | WILLIAMS     |
+| Actores | LUCILLE     | DEE          |
+| Actores | EWAN        | GOODING      |
+| Actores | WHOOPI      | HURT         |
+| Actores | CATE        | HARRIS       |
+| Actores | JADA        | RYDER        |
+| Actores | RIVER       | DEAN         |
+| Actores | ANGELA      | WITHERSPOON  |
+| Actores | KIM         | ALLEN        |
+| Actores | ALBERT      | JOHANSSON    |
+| Actores | FAY         | WINSLET      |
+| Actores | EMILY       | DEE          |
+| Actores | RUSSELL     | TEMPLE       |
+| Actores | JAYNE       | NOLTE        |
+| Actores | GEOFFREY    | HESTON       |
+| Actores | BEN         | HARRIS       |
+| Actores | MINNIE      | KILMER       |
+| Actores | MERYL       | GIBSON       |
+| Actores | IAN         | TANDY        |
+| Actores | FAY         | WOOD         |
+| Actores | GRETA       | MALDEN       |
+| Actores | VIVIEN      | BASINGER     |
+| Actores | LAURA       | BRODY        |
+| Actores | CHRIS       | DEPP         |
+| Actores | HARVEY      | HOPE         |
+| Actores | OPRAH       | KILMER       |
+| Actores | CHRISTOPHER | WEST         |
+| Actores | HUMPHREY    | WILLIS       |
+| Actores | AL          | GARLAND      |
+| Actores | NICK        | DEGENERES    |
+| Actores | LAURENCE    | BULLOCK      |
+| Actores | WILL        | WILSON       |
+| Actores | KENNETH     | HOFFMAN      |
+| Actores | MENA        | HOPPER       |
+| Actores | OLYMPIA     | PFEIFFER     |
+| Actores | GROUCHO     | WILLIAMS     |
+| Actores | ALAN        | DREYFUSS     |
+| Actores | MICHAEL     | BENING       |
+| Actores | WILLIAM     | HACKMAN      |
+| Actores | JON         | CHASE        |
+| Actores | GENE        | MCKELLEN     |
+| Actores | LISA        | MONROE       |
+| Actores | ED          | GUINESS      |
+| Actores | JEFF        | SILVERSTONE  |
+| Actores | MATTHEW     | CARREY       |
+| Actores | DEBBIE      | AKROYD       |
+| Actores | RUSSELL     | CLOSE        |
+| Actores | HUMPHREY    | GARLAND      |
+| Actores | MICHAEL     | BOLGER       |
+| Actores | JULIA       | ZELLWEGER    |
+| Actores | RENEE       | BALL         |
+| Actores | ROCK        | DUKAKIS      |
+| Actores | CUBA        | BIRCH        |
+| Actores | AUDREY      | BAILEY       |
+| Actores | GREGORY     | GOODING      |
+| Actores | JOHN        | SUVARI       |
+| Actores | BURT        | TEMPLE       |
+| Actores | MERYL       | ALLEN        |
+| Actores | JAYNE       | SILVERSTONE  |
+| Actores | BELA        | WALKEN       |
+| Actores | REESE       | WEST         |
+| Actores | MARY        | KEITEL       |
+| Actores | JULIA       | FAWCETT      |
+| Actores | THORA       | TEMPLE       |
+| Staff   | Mike        | Hillyer      |
+| Staff   | Jon         | Stephens     |
++---------+-------------+--------------+
+201 rows in set (0.0010 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'Actores' As TABLa, first_name, last_name from Actor union select 'Staff', first_name, last_name  from Staff;
++---------+-------------+--------------+
+| TABLa   | first_name  | last_name    |
++---------+-------------+--------------+
+| Actores | PENELOPE    | GUINESS      |
+| Actores | NICK        | WAHLBERG     |
+| Actores | ED          | CHASE        |
+| Actores | JENNIFER    | DAVIS        |
+| Actores | JOHNNY      | LOLLOBRIGIDA |
+| Actores | BETTE       | NICHOLSON    |
+| Actores | GRACE       | MOSTEL       |
+| Actores | MATTHEW     | JOHANSSON    |
+| Actores | JOE         | SWANK        |
+| Actores | CHRISTIAN   | GABLE        |
+| Actores | ZERO        | CAGE         |
+| Actores | KARL        | BERRY        |
+| Actores | UMA         | WOOD         |
+| Actores | VIVIEN      | BERGEN       |
+| Actores | CUBA        | OLIVIER      |
+| Actores | FRED        | COSTNER      |
+| Actores | HELEN       | VOIGHT       |
+| Actores | DAN         | TORN         |
+| Actores | BOB         | FAWCETT      |
+| Actores | LUCILLE     | TRACY        |
+| Actores | KIRSTEN     | PALTROW      |
+| Actores | ELVIS       | MARX         |
+| Actores | SANDRA      | KILMER       |
+| Actores | CAMERON     | STREEP       |
+| Actores | KEVIN       | BLOOM        |
+| Actores | RIP         | CRAWFORD     |
+| Actores | JULIA       | MCQUEEN      |
+| Actores | WOODY       | HOFFMAN      |
+| Actores | ALEC        | WAYNE        |
+| Actores | SANDRA      | PECK         |
+| Actores | SISSY       | SOBIESKI     |
+| Actores | TIM         | HACKMAN      |
+| Actores | MILLA       | PECK         |
+| Actores | AUDREY      | OLIVIER      |
+| Actores | JUDY        | DEAN         |
+| Actores | BURT        | DUKAKIS      |
+| Actores | VAL         | BOLGER       |
+| Actores | TOM         | MCKELLEN     |
+| Actores | GOLDIE      | BRODY        |
+| Actores | JOHNNY      | CAGE         |
+| Actores | JODIE       | DEGENERES    |
+| Actores | TOM         | MIRANDA      |
+| Actores | KIRK        | JOVOVICH     |
+| Actores | NICK        | STALLONE     |
+| Actores | REESE       | KILMER       |
+| Actores | PARKER      | GOLDBERG     |
+| Actores | JULIA       | BARRYMORE    |
+| Actores | FRANCES     | DAY-LEWIS    |
+| Actores | ANNE        | CRONYN       |
+| Actores | NATALIE     | HOPKINS      |
+| Actores | GARY        | PHOENIX      |
+| Actores | CARMEN      | HUNT         |
+| Actores | MENA        | TEMPLE       |
+| Actores | PENELOPE    | PINKETT      |
+| Actores | FAY         | KILMER       |
+| Actores | DAN         | HARRIS       |
+| Actores | JUDE        | CRUISE       |
+| Actores | CHRISTIAN   | AKROYD       |
+| Actores | DUSTIN      | TAUTOU       |
+| Actores | HENRY       | BERRY        |
+| Actores | CHRISTIAN   | NEESON       |
+| Actores | JAYNE       | NEESON       |
+| Actores | CAMERON     | WRAY         |
+| Actores | RAY         | JOHANSSON    |
+| Actores | ANGELA      | HUDSON       |
+| Actores | MARY        | TANDY        |
+| Actores | JESSICA     | BAILEY       |
+| Actores | RIP         | WINSLET      |
+| Actores | KENNETH     | PALTROW      |
+| Actores | MICHELLE    | MCCONAUGHEY  |
+| Actores | ADAM        | GRANT        |
+| Actores | SEAN        | WILLIAMS     |
+| Actores | GARY        | PENN         |
+| Actores | MILLA       | KEITEL       |
+| Actores | BURT        | POSEY        |
+| Actores | ANGELINA    | ASTAIRE      |
+| Actores | CARY        | MCCONAUGHEY  |
+| Actores | GROUCHO     | SINATRA      |
+| Actores | MAE         | HOFFMAN      |
+| Actores | RALPH       | CRUZ         |
+| Actores | SCARLETT    | DAMON        |
+| Actores | WOODY       | JOLIE        |
+| Actores | BEN         | WILLIS       |
+| Actores | JAMES       | PITT         |
+| Actores | MINNIE      | ZELLWEGER    |
+| Actores | GREG        | CHAPLIN      |
+| Actores | SPENCER     | PECK         |
+| Actores | KENNETH     | PESCI        |
+| Actores | CHARLIZE    | DENCH        |
+| Actores | SEAN        | GUINESS      |
+| Actores | CHRISTOPHER | BERRY        |
+| Actores | KIRSTEN     | AKROYD       |
+| Actores | ELLEN       | PRESLEY      |
+| Actores | KENNETH     | TORN         |
+| Actores | DARYL       | WAHLBERG     |
+| Actores | GENE        | WILLIS       |
+| Actores | MEG         | HAWKE        |
+| Actores | CHRIS       | BRIDGES      |
+| Actores | JIM         | MOSTEL       |
+| Actores | SPENCER     | DEPP         |
+| Actores | SUSAN       | DAVIS        |
+| Actores | WALTER      | TORN         |
+| Actores | MATTHEW     | LEIGH        |
+| Actores | PENELOPE    | CRONYN       |
+| Actores | SIDNEY      | CROWE        |
+| Actores | GROUCHO     | DUNST        |
+| Actores | GINA        | DEGENERES    |
+| Actores | WARREN      | NOLTE        |
+| Actores | SYLVESTER   | DERN         |
+| Actores | CAMERON     | ZELLWEGER    |
+| Actores | RUSSELL     | BACALL       |
+| Actores | MORGAN      | HOPKINS      |
+| Actores | MORGAN      | MCDORMAND    |
+| Actores | HARRISON    | BALE         |
+| Actores | DAN         | STREEP       |
+| Actores | RENEE       | TRACY        |
+| Actores | CUBA        | ALLEN        |
+| Actores | WARREN      | JACKMAN      |
+| Actores | PENELOPE    | MONROE       |
+| Actores | LIZA        | BERGMAN      |
+| Actores | SALMA       | NOLTE        |
+| Actores | JULIANNE    | DENCH        |
+| Actores | SCARLETT    | BENING       |
+| Actores | ALBERT      | NOLTE        |
+| Actores | FRANCES     | TOMEI        |
+| Actores | KEVIN       | GARLAND      |
+| Actores | CATE        | MCQUEEN      |
+| Actores | DARYL       | CRAWFORD     |
+| Actores | GRETA       | KEITEL       |
+| Actores | JANE        | JACKMAN      |
+| Actores | ADAM        | HOPPER       |
+| Actores | RICHARD     | PENN         |
+| Actores | GENE        | HOPKINS      |
+| Actores | RITA        | REYNOLDS     |
+| Actores | ED          | MANSFIELD    |
+| Actores | MORGAN      | WILLIAMS     |
+| Actores | LUCILLE     | DEE          |
+| Actores | EWAN        | GOODING      |
+| Actores | WHOOPI      | HURT         |
+| Actores | CATE        | HARRIS       |
+| Actores | JADA        | RYDER        |
+| Actores | RIVER       | DEAN         |
+| Actores | ANGELA      | WITHERSPOON  |
+| Actores | KIM         | ALLEN        |
+| Actores | ALBERT      | JOHANSSON    |
+| Actores | FAY         | WINSLET      |
+| Actores | EMILY       | DEE          |
+| Actores | RUSSELL     | TEMPLE       |
+| Actores | JAYNE       | NOLTE        |
+| Actores | GEOFFREY    | HESTON       |
+| Actores | BEN         | HARRIS       |
+| Actores | MINNIE      | KILMER       |
+| Actores | MERYL       | GIBSON       |
+| Actores | IAN         | TANDY        |
+| Actores | FAY         | WOOD         |
+| Actores | GRETA       | MALDEN       |
+| Actores | VIVIEN      | BASINGER     |
+| Actores | LAURA       | BRODY        |
+| Actores | CHRIS       | DEPP         |
+| Actores | HARVEY      | HOPE         |
+| Actores | OPRAH       | KILMER       |
+| Actores | CHRISTOPHER | WEST         |
+| Actores | HUMPHREY    | WILLIS       |
+| Actores | AL          | GARLAND      |
+| Actores | NICK        | DEGENERES    |
+| Actores | LAURENCE    | BULLOCK      |
+| Actores | WILL        | WILSON       |
+| Actores | KENNETH     | HOFFMAN      |
+| Actores | MENA        | HOPPER       |
+| Actores | OLYMPIA     | PFEIFFER     |
+| Actores | GROUCHO     | WILLIAMS     |
+| Actores | ALAN        | DREYFUSS     |
+| Actores | MICHAEL     | BENING       |
+| Actores | WILLIAM     | HACKMAN      |
+| Actores | JON         | CHASE        |
+| Actores | GENE        | MCKELLEN     |
+| Actores | LISA        | MONROE       |
+| Actores | ED          | GUINESS      |
+| Actores | JEFF        | SILVERSTONE  |
+| Actores | MATTHEW     | CARREY       |
+| Actores | DEBBIE      | AKROYD       |
+| Actores | RUSSELL     | CLOSE        |
+| Actores | HUMPHREY    | GARLAND      |
+| Actores | MICHAEL     | BOLGER       |
+| Actores | JULIA       | ZELLWEGER    |
+| Actores | RENEE       | BALL         |
+| Actores | ROCK        | DUKAKIS      |
+| Actores | CUBA        | BIRCH        |
+| Actores | AUDREY      | BAILEY       |
+| Actores | GREGORY     | GOODING      |
+| Actores | JOHN        | SUVARI       |
+| Actores | BURT        | TEMPLE       |
+| Actores | MERYL       | ALLEN        |
+| Actores | JAYNE       | SILVERSTONE  |
+| Actores | BELA        | WALKEN       |
+| Actores | REESE       | WEST         |
+| Actores | MARY        | KEITEL       |
+| Actores | JULIA       | FAWCETT      |
+| Actores | THORA       | TEMPLE       |
+| Staff   | Mike        | Hillyer      |
+| Staff   | Jon         | Stephens     |
++---------+-------------+--------------+
+201 rows in set (0.0011 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'Actores' As TABLA, first_name, last_name from Actor union select 'Staff' AS TABLA, first_name, last_name  from Staff;
++---------+-------------+--------------+
+| TABLA   | first_name  | last_name    |
++---------+-------------+--------------+
+| Actores | PENELOPE    | GUINESS      |
+| Actores | NICK        | WAHLBERG     |
+| Actores | ED          | CHASE        |
+| Actores | JENNIFER    | DAVIS        |
+| Actores | JOHNNY      | LOLLOBRIGIDA |
+| Actores | BETTE       | NICHOLSON    |
+| Actores | GRACE       | MOSTEL       |
+| Actores | MATTHEW     | JOHANSSON    |
+| Actores | JOE         | SWANK        |
+| Actores | CHRISTIAN   | GABLE        |
+| Actores | ZERO        | CAGE         |
+| Actores | KARL        | BERRY        |
+| Actores | UMA         | WOOD         |
+| Actores | VIVIEN      | BERGEN       |
+| Actores | CUBA        | OLIVIER      |
+| Actores | FRED        | COSTNER      |
+| Actores | HELEN       | VOIGHT       |
+| Actores | DAN         | TORN         |
+| Actores | BOB         | FAWCETT      |
+| Actores | LUCILLE     | TRACY        |
+| Actores | KIRSTEN     | PALTROW      |
+| Actores | ELVIS       | MARX         |
+| Actores | SANDRA      | KILMER       |
+| Actores | CAMERON     | STREEP       |
+| Actores | KEVIN       | BLOOM        |
+| Actores | RIP         | CRAWFORD     |
+| Actores | JULIA       | MCQUEEN      |
+| Actores | WOODY       | HOFFMAN      |
+| Actores | ALEC        | WAYNE        |
+| Actores | SANDRA      | PECK         |
+| Actores | SISSY       | SOBIESKI     |
+| Actores | TIM         | HACKMAN      |
+| Actores | MILLA       | PECK         |
+| Actores | AUDREY      | OLIVIER      |
+| Actores | JUDY        | DEAN         |
+| Actores | BURT        | DUKAKIS      |
+| Actores | VAL         | BOLGER       |
+| Actores | TOM         | MCKELLEN     |
+| Actores | GOLDIE      | BRODY        |
+| Actores | JOHNNY      | CAGE         |
+| Actores | JODIE       | DEGENERES    |
+| Actores | TOM         | MIRANDA      |
+| Actores | KIRK        | JOVOVICH     |
+| Actores | NICK        | STALLONE     |
+| Actores | REESE       | KILMER       |
+| Actores | PARKER      | GOLDBERG     |
+| Actores | JULIA       | BARRYMORE    |
+| Actores | FRANCES     | DAY-LEWIS    |
+| Actores | ANNE        | CRONYN       |
+| Actores | NATALIE     | HOPKINS      |
+| Actores | GARY        | PHOENIX      |
+| Actores | CARMEN      | HUNT         |
+| Actores | MENA        | TEMPLE       |
+| Actores | PENELOPE    | PINKETT      |
+| Actores | FAY         | KILMER       |
+| Actores | DAN         | HARRIS       |
+| Actores | JUDE        | CRUISE       |
+| Actores | CHRISTIAN   | AKROYD       |
+| Actores | DUSTIN      | TAUTOU       |
+| Actores | HENRY       | BERRY        |
+| Actores | CHRISTIAN   | NEESON       |
+| Actores | JAYNE       | NEESON       |
+| Actores | CAMERON     | WRAY         |
+| Actores | RAY         | JOHANSSON    |
+| Actores | ANGELA      | HUDSON       |
+| Actores | MARY        | TANDY        |
+| Actores | JESSICA     | BAILEY       |
+| Actores | RIP         | WINSLET      |
+| Actores | KENNETH     | PALTROW      |
+| Actores | MICHELLE    | MCCONAUGHEY  |
+| Actores | ADAM        | GRANT        |
+| Actores | SEAN        | WILLIAMS     |
+| Actores | GARY        | PENN         |
+| Actores | MILLA       | KEITEL       |
+| Actores | BURT        | POSEY        |
+| Actores | ANGELINA    | ASTAIRE      |
+| Actores | CARY        | MCCONAUGHEY  |
+| Actores | GROUCHO     | SINATRA      |
+| Actores | MAE         | HOFFMAN      |
+| Actores | RALPH       | CRUZ         |
+| Actores | SCARLETT    | DAMON        |
+| Actores | WOODY       | JOLIE        |
+| Actores | BEN         | WILLIS       |
+| Actores | JAMES       | PITT         |
+| Actores | MINNIE      | ZELLWEGER    |
+| Actores | GREG        | CHAPLIN      |
+| Actores | SPENCER     | PECK         |
+| Actores | KENNETH     | PESCI        |
+| Actores | CHARLIZE    | DENCH        |
+| Actores | SEAN        | GUINESS      |
+| Actores | CHRISTOPHER | BERRY        |
+| Actores | KIRSTEN     | AKROYD       |
+| Actores | ELLEN       | PRESLEY      |
+| Actores | KENNETH     | TORN         |
+| Actores | DARYL       | WAHLBERG     |
+| Actores | GENE        | WILLIS       |
+| Actores | MEG         | HAWKE        |
+| Actores | CHRIS       | BRIDGES      |
+| Actores | JIM         | MOSTEL       |
+| Actores | SPENCER     | DEPP         |
+| Actores | SUSAN       | DAVIS        |
+| Actores | WALTER      | TORN         |
+| Actores | MATTHEW     | LEIGH        |
+| Actores | PENELOPE    | CRONYN       |
+| Actores | SIDNEY      | CROWE        |
+| Actores | GROUCHO     | DUNST        |
+| Actores | GINA        | DEGENERES    |
+| Actores | WARREN      | NOLTE        |
+| Actores | SYLVESTER   | DERN         |
+| Actores | CAMERON     | ZELLWEGER    |
+| Actores | RUSSELL     | BACALL       |
+| Actores | MORGAN      | HOPKINS      |
+| Actores | MORGAN      | MCDORMAND    |
+| Actores | HARRISON    | BALE         |
+| Actores | DAN         | STREEP       |
+| Actores | RENEE       | TRACY        |
+| Actores | CUBA        | ALLEN        |
+| Actores | WARREN      | JACKMAN      |
+| Actores | PENELOPE    | MONROE       |
+| Actores | LIZA        | BERGMAN      |
+| Actores | SALMA       | NOLTE        |
+| Actores | JULIANNE    | DENCH        |
+| Actores | SCARLETT    | BENING       |
+| Actores | ALBERT      | NOLTE        |
+| Actores | FRANCES     | TOMEI        |
+| Actores | KEVIN       | GARLAND      |
+| Actores | CATE        | MCQUEEN      |
+| Actores | DARYL       | CRAWFORD     |
+| Actores | GRETA       | KEITEL       |
+| Actores | JANE        | JACKMAN      |
+| Actores | ADAM        | HOPPER       |
+| Actores | RICHARD     | PENN         |
+| Actores | GENE        | HOPKINS      |
+| Actores | RITA        | REYNOLDS     |
+| Actores | ED          | MANSFIELD    |
+| Actores | MORGAN      | WILLIAMS     |
+| Actores | LUCILLE     | DEE          |
+| Actores | EWAN        | GOODING      |
+| Actores | WHOOPI      | HURT         |
+| Actores | CATE        | HARRIS       |
+| Actores | JADA        | RYDER        |
+| Actores | RIVER       | DEAN         |
+| Actores | ANGELA      | WITHERSPOON  |
+| Actores | KIM         | ALLEN        |
+| Actores | ALBERT      | JOHANSSON    |
+| Actores | FAY         | WINSLET      |
+| Actores | EMILY       | DEE          |
+| Actores | RUSSELL     | TEMPLE       |
+| Actores | JAYNE       | NOLTE        |
+| Actores | GEOFFREY    | HESTON       |
+| Actores | BEN         | HARRIS       |
+| Actores | MINNIE      | KILMER       |
+| Actores | MERYL       | GIBSON       |
+| Actores | IAN         | TANDY        |
+| Actores | FAY         | WOOD         |
+| Actores | GRETA       | MALDEN       |
+| Actores | VIVIEN      | BASINGER     |
+| Actores | LAURA       | BRODY        |
+| Actores | CHRIS       | DEPP         |
+| Actores | HARVEY      | HOPE         |
+| Actores | OPRAH       | KILMER       |
+| Actores | CHRISTOPHER | WEST         |
+| Actores | HUMPHREY    | WILLIS       |
+| Actores | AL          | GARLAND      |
+| Actores | NICK        | DEGENERES    |
+| Actores | LAURENCE    | BULLOCK      |
+| Actores | WILL        | WILSON       |
+| Actores | KENNETH     | HOFFMAN      |
+| Actores | MENA        | HOPPER       |
+| Actores | OLYMPIA     | PFEIFFER     |
+| Actores | GROUCHO     | WILLIAMS     |
+| Actores | ALAN        | DREYFUSS     |
+| Actores | MICHAEL     | BENING       |
+| Actores | WILLIAM     | HACKMAN      |
+| Actores | JON         | CHASE        |
+| Actores | GENE        | MCKELLEN     |
+| Actores | LISA        | MONROE       |
+| Actores | ED          | GUINESS      |
+| Actores | JEFF        | SILVERSTONE  |
+| Actores | MATTHEW     | CARREY       |
+| Actores | DEBBIE      | AKROYD       |
+| Actores | RUSSELL     | CLOSE        |
+| Actores | HUMPHREY    | GARLAND      |
+| Actores | MICHAEL     | BOLGER       |
+| Actores | JULIA       | ZELLWEGER    |
+| Actores | RENEE       | BALL         |
+| Actores | ROCK        | DUKAKIS      |
+| Actores | CUBA        | BIRCH        |
+| Actores | AUDREY      | BAILEY       |
+| Actores | GREGORY     | GOODING      |
+| Actores | JOHN        | SUVARI       |
+| Actores | BURT        | TEMPLE       |
+| Actores | MERYL       | ALLEN        |
+| Actores | JAYNE       | SILVERSTONE  |
+| Actores | BELA        | WALKEN       |
+| Actores | REESE       | WEST         |
+| Actores | MARY        | KEITEL       |
+| Actores | JULIA       | FAWCETT      |
+| Actores | THORA       | TEMPLE       |
+| Staff   | Mike        | Hillyer      |
+| Staff   | Jon         | Stephens     |
++---------+-------------+--------------+
+201 rows in set (0.0011 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > show tables;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0021 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > desc city;
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| Field       | Type                 | Null | Key | Default           | Extra                       |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| city_id     | smallint(5) unsigned | NO   | PRI | NULL              | auto_increment              |
+| city        | varchar(50)          | NO   |     | NULL              |                             |
+| country_id  | smallint(5) unsigned | NO   | MUL | NULL              |                             |
+| last_update | timestamp            | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+4 rows in set (0.0021 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > desc coutry;
+ERROR: 1146 (42S02): Table 'sakila.coutry' doesn't exist
+
+ MySQL  localhost:3306 ssl  sakila  SQL > desc country;
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| Field       | Type                 | Null | Key | Default           | Extra                       |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+| country_id  | smallint(5) unsigned | NO   | PRI | NULL              | auto_increment              |
+| country     | varchar(50)          | NO   |     | NULL              |                             |
+| last_update | timestamp            | NO   |     | CURRENT_TIMESTAMP | on update CURRENT_TIMESTAMP |
++-------------+----------------------+------+-----+-------------------+-----------------------------+
+3 rows in set (0.0019 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'City' , city from city union select 'Staff' AS TABLA, country  from country limit 10;
++------+--------------------+
+| City | city               |
++------+--------------------+
+| City | A Corua (La Corua) |
+| City | Abha               |
+| City | Abu Dhabi          |
+| City | Acua               |
+| City | Adana              |
+| City | Addis Abeba        |
+| City | Aden               |
+| City | Adoni              |
+| City | Ahmadnagar         |
+| City | Akishima           |
++------+--------------------+
+10 rows in set (0.1414 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'City' , city from city union select 'Staff', country  from country limit 10;
++------+--------------------+
+| City | city               |
++------+--------------------+
+| City | A Corua (La Corua) |
+| City | Abha               |
+| City | Abu Dhabi          |
+| City | Acua               |
+| City | Adana              |
+| City | Addis Abeba        |
+| City | Aden               |
+| City | Adoni              |
+| City | Ahmadnagar         |
+| City | Akishima           |
++------+--------------------+
+10 rows in set (0.0012 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'City' , city from city union select 'Staff' limit 10, country  from country limit 20;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from country limit 20' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'City' , city from city limit 10 union select 'Staff', country  from country limit 20;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'union select 'Staff', country  from country limit 20' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'City' , city from city limit 10 union select 'country', country  from country limit 20;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'union select 'country', country  from country limit 20' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'City' , city from city limit 10 union select 'country', country  from country limit 10;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'union select 'country', country  from country limit 10' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'City' , city from city union select 'Staff', country  from country limit 10;
++------+--------------------+
+| City | city               |
++------+--------------------+
+| City | A Corua (La Corua) |
+| City | Abha               |
+| City | Abu Dhabi          |
+| City | Acua               |
+| City | Adana              |
+| City | Addis Abeba        |
+| City | Aden               |
+| City | Adoni              |
+| City | Ahmadnagar         |
+| City | Akishima           |
++------+--------------------+
+10 rows in set (0.0014 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'City' , city from city limit 10 union select 'Staff', country  from country limit 10;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'union select 'Staff', country  from country limit 10' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > (select 'City' , city from city limit 10 ) union (select 'Staff', country  from country limit 10);
++-------+--------------------+
+| City  | city               |
++-------+--------------------+
+| City  | A Corua (La Corua) |
+| City  | Abha               |
+| City  | Abu Dhabi          |
+| City  | Acua               |
+| City  | Adana              |
+| City  | Addis Abeba        |
+| City  | Aden               |
+| City  | Adoni              |
+| City  | Ahmadnagar         |
+| City  | Akishima           |
+| Staff | Afghanistan        |
+| Staff | Algeria            |
+| Staff | American Samoa     |
+| Staff | Angola             |
+| Staff | Anguilla           |
+| Staff | Argentina          |
+| Staff | Armenia            |
+| Staff | Australia          |
+| Staff | Austria            |
+| Staff | Azerbaijan         |
++-------+--------------------+
+20 rows in set (0.0009 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > (select 'City' , city from city limit 10 ) union (select 'Country', country  from country limit 10);
++---------+--------------------+
+| City    | city               |
++---------+--------------------+
+| City    | A Corua (La Corua) |
+| City    | Abha               |
+| City    | Abu Dhabi          |
+| City    | Acua               |
+| City    | Adana              |
+| City    | Addis Abeba        |
+| City    | Aden               |
+| City    | Adoni              |
+| City    | Ahmadnagar         |
+| City    | Akishima           |
+| Country | Afghanistan        |
+| Country | Algeria            |
+| Country | American Samoa     |
+| Country | Angola             |
+| Country | Anguilla           |
+| Country | Argentina          |
+| Country | Armenia            |
+| Country | Australia          |
+| Country | Austria            |
+| Country | Azerbaijan         |
++---------+--------------------+
+20 rows in set (0.0007 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > (select 'City' , city from city limit 10 ) union (select 'Country', country  from country limit 10) order by city ;
+ERROR: 1052 (23000): Column 'city' in order clause is ambiguous
+
+ MySQL  localhost:3306 ssl  sakila  SQL > (select 'City' , city from city limit 10 ) union (select 'Country', country  from country limit 10) order by City ;
+ERROR: 1052 (23000): Column 'City' in order clause is ambiguous
+
+ MySQL  localhost:3306 ssl  sakila  SQL > (select 'City' as Tabla , city from city limit 10 ) union (select 'Country', country  from country limit 10) order by tabla ;
++---------+--------------------+
+| Tabla   | city               |
++---------+--------------------+
+| City    | A Corua (La Corua) |
+| City    | Abha               |
+| City    | Abu Dhabi          |
+| City    | Acua               |
+| City    | Adana              |
+| City    | Addis Abeba        |
+| City    | Aden               |
+| City    | Adoni              |
+| City    | Ahmadnagar         |
+| City    | Akishima           |
+| Country | Afghanistan        |
+| Country | Algeria            |
+| Country | American Samoa     |
+| Country | Angola             |
+| Country | Anguilla           |
+| Country | Argentina          |
+| Country | Armenia            |
+| Country | Australia          |
+| Country | Austria            |
+| Country | Azerbaijan         |
++---------+--------------------+
+20 rows in set (0.0009 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > (select 'City' as Tabla , city from city limit 10 ) union (select 'Country', country  from country limit 10) order by city ;
++---------+--------------------+
+| Tabla   | city               |
++---------+--------------------+
+| City    | A Corua (La Corua) |
+| City    | Abha               |
+| City    | Abu Dhabi          |
+| City    | Acua               |
+| City    | Adana              |
+| City    | Addis Abeba        |
+| City    | Aden               |
+| City    | Adoni              |
+| Country | Afghanistan        |
+| City    | Ahmadnagar         |
+| City    | Akishima           |
+| Country | Algeria            |
+| Country | American Samoa     |
+| Country | Angola             |
+| Country | Anguilla           |
+| Country | Argentina          |
+| Country | Armenia            |
+| Country | Australia          |
+| Country | Austria            |
+| Country | Azerbaijan         |
++---------+--------------------+
+20 rows in set (0.0008 sec)
+                                          select 'Actores' As TABLA, first_name, last_name from Actor union select 'Staff', first_name, last_name  from Staff oder by last_name;localhost:3306 ssl  sakila  SQL > select 'Actores' As TABLA, first_name, last_name from Actor union select 'Staff', first_name, last_name  from Staff oder by l;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'by last_name' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select 'Actores' As TABLA, first_name, last_name from Actor union select 'Staff', first_name, last_name  from Staff order by last_name;
++---------+-------------+--------------+
+| TABLA   | first_name  | last_name    |
++---------+-------------+--------------+
+| Actores | CHRISTIAN   | AKROYD       |
+| Actores | KIRSTEN     | AKROYD       |
+| Actores | DEBBIE      | AKROYD       |
+| Actores | CUBA        | ALLEN        |
+| Actores | KIM         | ALLEN        |
+| Actores | MERYL       | ALLEN        |
+| Actores | ANGELINA    | ASTAIRE      |
+| Actores | RUSSELL     | BACALL       |
+| Actores | JESSICA     | BAILEY       |
+| Actores | AUDREY      | BAILEY       |
+| Actores | HARRISON    | BALE         |
+| Actores | RENEE       | BALL         |
+| Actores | JULIA       | BARRYMORE    |
+| Actores | VIVIEN      | BASINGER     |
+| Actores | SCARLETT    | BENING       |
+| Actores | MICHAEL     | BENING       |
+| Actores | VIVIEN      | BERGEN       |
+| Actores | LIZA        | BERGMAN      |
+| Actores | CHRISTOPHER | BERRY        |
+| Actores | KARL        | BERRY        |
+| Actores | HENRY       | BERRY        |
+| Actores | CUBA        | BIRCH        |
+| Actores | KEVIN       | BLOOM        |
+| Actores | VAL         | BOLGER       |
+| Actores | MICHAEL     | BOLGER       |
+| Actores | CHRIS       | BRIDGES      |
+| Actores | LAURA       | BRODY        |
+| Actores | GOLDIE      | BRODY        |
+| Actores | LAURENCE    | BULLOCK      |
+| Actores | ZERO        | CAGE         |
+| Actores | JOHNNY      | CAGE         |
+| Actores | MATTHEW     | CARREY       |
+| Actores | GREG        | CHAPLIN      |
+| Actores | ED          | CHASE        |
+| Actores | JON         | CHASE        |
+| Actores | RUSSELL     | CLOSE        |
+| Actores | FRED        | COSTNER      |
+| Actores | RIP         | CRAWFORD     |
+| Actores | DARYL       | CRAWFORD     |
+| Actores | PENELOPE    | CRONYN       |
+| Actores | ANNE        | CRONYN       |
+| Actores | SIDNEY      | CROWE        |
+| Actores | JUDE        | CRUISE       |
+| Actores | RALPH       | CRUZ         |
+| Actores | SCARLETT    | DAMON        |
+| Actores | JENNIFER    | DAVIS        |
+| Actores | SUSAN       | DAVIS        |
+| Actores | FRANCES     | DAY-LEWIS    |
+| Actores | JUDY        | DEAN         |
+| Actores | RIVER       | DEAN         |
+| Actores | EMILY       | DEE          |
+| Actores | LUCILLE     | DEE          |
+| Actores | GINA        | DEGENERES    |
+| Actores | NICK        | DEGENERES    |
+| Actores | JODIE       | DEGENERES    |
+| Actores | JULIANNE    | DENCH        |
+| Actores | CHARLIZE    | DENCH        |
+| Actores | SPENCER     | DEPP         |
+| Actores | CHRIS       | DEPP         |
+| Actores | SYLVESTER   | DERN         |
+| Actores | ALAN        | DREYFUSS     |
+| Actores | ROCK        | DUKAKIS      |
+| Actores | BURT        | DUKAKIS      |
+| Actores | GROUCHO     | DUNST        |
+| Actores | BOB         | FAWCETT      |
+| Actores | JULIA       | FAWCETT      |
+| Actores | CHRISTIAN   | GABLE        |
+| Actores | AL          | GARLAND      |
+| Actores | KEVIN       | GARLAND      |
+| Actores | HUMPHREY    | GARLAND      |
+| Actores | MERYL       | GIBSON       |
+| Actores | PARKER      | GOLDBERG     |
+| Actores | EWAN        | GOODING      |
+| Actores | GREGORY     | GOODING      |
+| Actores | ADAM        | GRANT        |
+| Actores | SEAN        | GUINESS      |
+| Actores | ED          | GUINESS      |
+| Actores | PENELOPE    | GUINESS      |
+| Actores | WILLIAM     | HACKMAN      |
+| Actores | TIM         | HACKMAN      |
+| Actores | CATE        | HARRIS       |
+| Actores | BEN         | HARRIS       |
+| Actores | DAN         | HARRIS       |
+| Actores | MEG         | HAWKE        |
+| Actores | GEOFFREY    | HESTON       |
+| Staff   | Mike        | Hillyer      |
+| Actores | WOODY       | HOFFMAN      |
+| Actores | MAE         | HOFFMAN      |
+| Actores | KENNETH     | HOFFMAN      |
+| Actores | HARVEY      | HOPE         |
+| Actores | NATALIE     | HOPKINS      |
+| Actores | GENE        | HOPKINS      |
+| Actores | MORGAN      | HOPKINS      |
+| Actores | ADAM        | HOPPER       |
+| Actores | MENA        | HOPPER       |
+| Actores | ANGELA      | HUDSON       |
+| Actores | CARMEN      | HUNT         |
+| Actores | WHOOPI      | HURT         |
+| Actores | JANE        | JACKMAN      |
+| Actores | WARREN      | JACKMAN      |
+| Actores | MATTHEW     | JOHANSSON    |
+| Actores | RAY         | JOHANSSON    |
+| Actores | ALBERT      | JOHANSSON    |
+| Actores | WOODY       | JOLIE        |
+| Actores | KIRK        | JOVOVICH     |
+| Actores | MILLA       | KEITEL       |
+| Actores | MARY        | KEITEL       |
+| Actores | GRETA       | KEITEL       |
+| Actores | REESE       | KILMER       |
+| Actores | SANDRA      | KILMER       |
+| Actores | FAY         | KILMER       |
+| Actores | MINNIE      | KILMER       |
+| Actores | OPRAH       | KILMER       |
+| Actores | MATTHEW     | LEIGH        |
+| Actores | JOHNNY      | LOLLOBRIGIDA |
+| Actores | GRETA       | MALDEN       |
+| Actores | ED          | MANSFIELD    |
+| Actores | ELVIS       | MARX         |
+| Actores | CARY        | MCCONAUGHEY  |
+| Actores | MICHELLE    | MCCONAUGHEY  |
+| Actores | MORGAN      | MCDORMAND    |
+| Actores | TOM         | MCKELLEN     |
+| Actores | GENE        | MCKELLEN     |
+| Actores | JULIA       | MCQUEEN      |
+| Actores | CATE        | MCQUEEN      |
+| Actores | TOM         | MIRANDA      |
+| Actores | PENELOPE    | MONROE       |
+| Actores | LISA        | MONROE       |
+| Actores | JIM         | MOSTEL       |
+| Actores | GRACE       | MOSTEL       |
+| Actores | CHRISTIAN   | NEESON       |
+| Actores | JAYNE       | NEESON       |
+| Actores | BETTE       | NICHOLSON    |
+| Actores | WARREN      | NOLTE        |
+| Actores | ALBERT      | NOLTE        |
+| Actores | JAYNE       | NOLTE        |
+| Actores | SALMA       | NOLTE        |
+| Actores | AUDREY      | OLIVIER      |
+| Actores | CUBA        | OLIVIER      |
+| Actores | KIRSTEN     | PALTROW      |
+| Actores | KENNETH     | PALTROW      |
+| Actores | SANDRA      | PECK         |
+| Actores | SPENCER     | PECK         |
+| Actores | MILLA       | PECK         |
+| Actores | RICHARD     | PENN         |
+| Actores | GARY        | PENN         |
+| Actores | KENNETH     | PESCI        |
+| Actores | OLYMPIA     | PFEIFFER     |
+| Actores | GARY        | PHOENIX      |
+| Actores | PENELOPE    | PINKETT      |
+| Actores | JAMES       | PITT         |
+| Actores | BURT        | POSEY        |
+| Actores | ELLEN       | PRESLEY      |
+| Actores | RITA        | REYNOLDS     |
+| Actores | JADA        | RYDER        |
+| Actores | JAYNE       | SILVERSTONE  |
+| Actores | JEFF        | SILVERSTONE  |
+| Actores | GROUCHO     | SINATRA      |
+| Actores | SISSY       | SOBIESKI     |
+| Actores | NICK        | STALLONE     |
+| Staff   | Jon         | Stephens     |
+| Actores | DAN         | STREEP       |
+| Actores | CAMERON     | STREEP       |
+| Actores | JOHN        | SUVARI       |
+| Actores | JOE         | SWANK        |
+| Actores | MARY        | TANDY        |
+| Actores | IAN         | TANDY        |
+| Actores | DUSTIN      | TAUTOU       |
+| Actores | RUSSELL     | TEMPLE       |
+| Actores | MENA        | TEMPLE       |
+| Actores | THORA       | TEMPLE       |
+| Actores | BURT        | TEMPLE       |
+| Actores | FRANCES     | TOMEI        |
+| Actores | DAN         | TORN         |
+| Actores | KENNETH     | TORN         |
+| Actores | WALTER      | TORN         |
+| Actores | LUCILLE     | TRACY        |
+| Actores | RENEE       | TRACY        |
+| Actores | HELEN       | VOIGHT       |
+| Actores | NICK        | WAHLBERG     |
+| Actores | DARYL       | WAHLBERG     |
+| Actores | BELA        | WALKEN       |
+| Actores | ALEC        | WAYNE        |
+| Actores | CHRISTOPHER | WEST         |
+| Actores | REESE       | WEST         |
+| Actores | GROUCHO     | WILLIAMS     |
+| Actores | SEAN        | WILLIAMS     |
+| Actores | MORGAN      | WILLIAMS     |
+| Actores | BEN         | WILLIS       |
+| Actores | HUMPHREY    | WILLIS       |
+| Actores | GENE        | WILLIS       |
+| Actores | WILL        | WILSON       |
+| Actores | FAY         | WINSLET      |
+| Actores | RIP         | WINSLET      |
+| Actores | ANGELA      | WITHERSPOON  |
+| Actores | FAY         | WOOD         |
+| Actores | UMA         | WOOD         |
+| Actores | CAMERON     | WRAY         |
+| Actores | MINNIE      | ZELLWEGER    |
+| Actores | CAMERON     | ZELLWEGER    |
+| Actores | JULIA       | ZELLWEGER    |
++---------+-------------+--------------+
+201 rows in set (0.0013 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > show tables;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0023 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name form actor;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'actor' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name form actor;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'actor' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name form actor where last_name like 'W%';
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'actor where last_name like 'W%'' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor where last_name like 'W%';
++-------------+-------------+
+| first_name  | last_name   |
++-------------+-------------+
+| NICK        | WAHLBERG    |
+| DARYL       | WAHLBERG    |
+| BELA        | WALKEN      |
+| ALEC        | WAYNE       |
+| CHRISTOPHER | WEST        |
+| REESE       | WEST        |
+| SEAN        | WILLIAMS    |
+| MORGAN      | WILLIAMS    |
+| GROUCHO     | WILLIAMS    |
+| BEN         | WILLIS      |
+| GENE        | WILLIS      |
+| HUMPHREY    | WILLIS      |
+| WILL        | WILSON      |
+| RIP         | WINSLET     |
+| FAY         | WINSLET     |
+| ANGELA      | WITHERSPOON |
+| UMA         | WOOD        |
+| FAY         | WOOD        |
+| CAMERON     | WRAY        |
++-------------+-------------+
+19 rows in set (0.1123 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor where last_name like 'A%';
++------------+-----------+
+| first_name | last_name |
++------------+-----------+
+| CHRISTIAN  | AKROYD    |
+| KIRSTEN    | AKROYD    |
+| DEBBIE     | AKROYD    |
+| CUBA       | ALLEN     |
+| KIM        | ALLEN     |
+| MERYL      | ALLEN     |
+| ANGELINA   | ASTAIRE   |
++------------+-----------+
+7 rows in set (0.0006 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor where last_name like '%A';
++------------+--------------+
+| first_name | last_name    |
++------------+--------------+
+| JOHNNY     | LOLLOBRIGIDA |
+| TOM        | MIRANDA      |
+| GROUCHO    | SINATRA      |
++------------+--------------+
+3 rows in set (0.0010 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select first_name, last_name from actor where last_name like '%W%';
++-------------+-------------+
+| first_name  | last_name   |
++-------------+-------------+
+| NICK        | WAHLBERG    |
+| JOE         | SWANK       |
+| UMA         | WOOD        |
+| BOB         | FAWCETT     |
+| KIRSTEN     | PALTROW     |
+| RIP         | CRAWFORD    |
+| ALEC        | WAYNE       |
+| FRANCES     | DAY-LEWIS   |
+| CAMERON     | WRAY        |
+| RIP         | WINSLET     |
+| KENNETH     | PALTROW     |
+| SEAN        | WILLIAMS    |
+| BEN         | WILLIS      |
+| MINNIE      | ZELLWEGER   |
+| DARYL       | WAHLBERG    |
+| GENE        | WILLIS      |
+| MEG         | HAWKE       |
+| SIDNEY      | CROWE       |
+| CAMERON     | ZELLWEGER   |
+| DARYL       | CRAWFORD    |
+| MORGAN      | WILLIAMS    |
+| ANGELA      | WITHERSPOON |
+| FAY         | WINSLET     |
+| FAY         | WOOD        |
+| CHRISTOPHER | WEST        |
+| HUMPHREY    | WILLIS      |
+| WILL        | WILSON      |
+| GROUCHO     | WILLIAMS    |
+| JULIA       | ZELLWEGER   |
+| BELA        | WALKEN      |
+| REESE       | WEST        |
+| JULIA       | FAWCETT     |
++-------------+-------------+
+32 rows in set (0.0009 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select cout(*) from actor where last_name like '%W%';
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) from actor where last_name like '%W%'' at line 1
+
+ MySQL  localhost:3306 ssl  sakila  SQL > select count(*) from actor where last_name like '%W%';
++----------+
+| count(*) |
++----------+
+|       32 |
++----------+
+1 row in set (0.1005 sec)
+
+ MySQL  localhost:3306 ssl  sakila  SQL >

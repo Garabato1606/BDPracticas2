@@ -1,0 +1,16 @@
+use evaluacion_2;
+/*full order union*/
+select * from tablaa A
+left join tablab B on a.nombre = b.nombre 
+union all
+select * from tablaa A
+right join tablab B on a.nombre = b.nombre
+where a.nombre is null;
+
+use northwind;
+select a.orderid, b.customerid, b.companyname from Orders A 
+left join Customers B on a.customerid = b.customerid
+union all
+select a.orderid, b.customerid, b.companyname from Orders A 
+right join Customers B on a.customerid = b.customerid
+where a.customerid is null;

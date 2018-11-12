@@ -1,0 +1,26 @@
+use northwind;
+/*EJERCICIO 1*/
+select b.companyname, sum(c.unitprice * c.quantity)
+as Total from Orders A
+inner join Customers B on b.customerid = a.customerid
+inner join Orderdetails C on  a.orderid = c.orderid
+group by a.customerid order by total desc limit 1;
+/*EJERCICIO 2*/
+select b.companyname, sum(c.unitprice * c.quantity)
+as Total from Orders A
+inner join Customers B on b.customerid = a.customerid
+inner join Orderdetails C on  a.orderid = c.orderid
+group by a.customerid order by total limit 1;
+/*EJERCICIO 3*/
+select sum(a.quantity) as total, b.productname from Orderdetails A
+inner join Products B on a.productid = b.productid
+group by b.productid order by total desc limit 1;
+/*EJERCICIO 4*/
+select sum(a.quantity * a.unitprice) as total, b.productname from Orderdetails A
+inner join Products B on a.productid = b.productid
+group by b.productid order by total desc limit 1;
+/*EJERCICIO 5*/ 
+select sum(a.quantity * a.unitprice) as total, b.productname from Orderdetails A
+inner join Products B on a.productid = b.productid
+group by b.productid order by total limit 1;
+

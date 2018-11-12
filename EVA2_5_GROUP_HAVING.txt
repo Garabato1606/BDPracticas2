@@ -1,0 +1,282 @@
+MySQL Shell 8.0.12
+
+Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+
+ MySQL  SQL > \connect -c root@localhost
+The -c option is deprecated, please use --mysql or -mc instead
+Creating a Classic session to 'root@localhost'
+Please provide the password for 'root@localhost': ****
+Save password for 'root@localhost:3306'? [Y]es/[N]o/Ne[v]er (default No): y
+Fetching schema names for autocompletion... Press ^C to stop.
+Your MySQL connection id is 14
+Server version: 8.0.12 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+
+ MySQL  localhost:3306 ssl  SQL > \use northwind
+Default schema set to `northwind`.
+Fetching table and column names from `northwind` for auto-completion... Press ^C to stop.
+
+ MySQL  localhost:3306 ssl  northwind  SQL > show tables;
++----------------------+
+| Tables_in_northwind  |
++----------------------+
+| categories           |
+| customercustomerdemo |
+| customerdemographics |
+| customers            |
+| employees            |
+| employeeterritories  |
+| orderdetails         |
+| orders               |
+| products             |
+| region               |
+| shippers             |
+| suppliers            |
+| territories          |
++----------------------+
+13 rows in set (0.0024 sec)
+
+ MySQL  localhost:3306 ssl  northwind  SQL > desc ordertails;
+ERROR: 1146 (42S02): Table 'northwind.ordertails' doesn't exist
+
+ MySQL  localhost:3306 ssl  northwind  SQL > desc orderdetails;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| OrderID   | int(11)     | NO   | PRI | NULL    |       |
+| ProductID | int(11)     | NO   | PRI | NULL    |       |
+| UnitPrice | double      | NO   |     | 0       |       |
+| Quantity  | smallint(6) | NO   |     | 0       |       |
+| Discount  | double      | NO   |     | 0       |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.0027 sec)
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select count(*)  from orderdetails;
++----------+
+| count(*) |
++----------+
+|     2155 |
++----------+
+1 row in set (0.1111 sec)
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select b.productname, (a.unitprice * a.quantity) as subtotal
+                                         ... from orderdetails a
+                                         ... inner join products b on a.productid = b.productid limit 10;
++--------------+----------+
+| productname  | subtotal |
++--------------+----------+
+| Alice Mutton |      936 |
+| Alice Mutton |      468 |
+| Alice Mutton |      468 |
+| Alice Mutton |     1248 |
+| Alice Mutton |    249.6 |
+| Alice Mutton |      624 |
+| Alice Mutton |     2184 |
+| Alice Mutton |   1123.2 |
+| Alice Mutton |     62.4 |
+| Alice Mutton |     1404 |
++--------------+----------+
+10 rows in set (0.0014 sec)
+
+
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select sum(quantity * unitprice) from orderdetails;
++---------------------------+
+| sum(quantity * unitprice) |
++---------------------------+
+|                1354458.59 |
++---------------------------+
+1 row in set (0.0181 sec)
+
+
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select b.productname, sum(a.unitprice * a.quantity) as total from orderdetails a inner join products b on a.productid = b.productid
+                                         ... group by a.productid;
+
+
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select productid from products where productname like 'Chai';
++-----------+
+| productid |
++-----------+
+|         1 |
++-----------+
+1 row in set (0.0007 sec)
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select productname from products where productid = 1;
++-------------+
+| productname |
++-------------+
+| Chai        |
++-------------+
+1 row in set (0.0005 sec)
+
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select sum(quantity * unitprice) as total from orderdetails  where productid = 1;
++---------+
+| total   |
++---------+
+| 14277.6 |
++---------+
+1 row in set (0.1106 sec)
+
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select c.companyname, sum(a.quantity * a.unitprice) as total from orderdetails a inner join orders b on a.orderid = b.orderid inner join customers c on b.customerid = c.customerid group by b.customerid;
++------------------------------------+--------------------+
+| companyname                        | total              |
++------------------------------------+--------------------+
+| Alfreds Futterkiste                |             4596.2 |
+| Ana Trujillo Emparedados y helados |            1402.95 |
+| Antonio Moreno Taquer?a            |  7515.349999999999 |
+| Around the Horn                    |            13806.5 |
+| B's Beverages                      |             6089.9 |
+| B?lido Comidas preparadas          |             5297.8 |
+| Berglunds snabbk?p                 | 26968.149999999998 |
+| Blauer See Delikatessen            |             3239.8 |
+| Blondesddsl p?re et fils           |              19088 |
+| Bon app'                           |           23850.95 |
+| Bottom-Dollar Markets              |            22607.7 |
+| Cactus Comidas para llevar         |             1814.8 |
+| Centro comercial Moctezuma         |              100.8 |
+| Chop-suey Chinese                  |            12886.3 |
+| Com?rcio Mineiro                   |            3810.75 |
+| Consolidated Holdings              |             1719.1 |
+| Die Wandernde Kuh                  |           10653.85 |
+| Drachenblut Delikatessen           |            3763.21 |
+| Du monde entier                    | 1615.8999999999999 |
+| Eastern Connection                 |           15033.66 |
+| Ernst Handel                       |          113236.68 |
+| Familia Arquibaldo                 |  4438.900000000001 |
+| Folies gourmandes                  |            11666.9 |
+| Folk och f? HB                     |           32555.55 |
+| France restauration                |            3172.16 |
+| Franchi S.p.A.                     |             1545.7 |
+| Frankenversand                     |           28722.71 |
+| Furia Bacalhau e Frutos do Mar     |            7151.55 |
+| Galer?a del gastr?nomo             |              836.7 |
+| Godos Cocina T?pica                |            11830.1 |
+| Gourmet Lanchonetes                |            8702.23 |
+| Great Lakes Food Market            |           19711.13 |
+| GROSELLA-Restaurante               |             1488.7 |
+| Hanari Carnes                      |           34101.15 |
+| HILARION-Abastos                   | 23611.579999999998 |
+| Hungry Coyote Import Store         |             3063.2 |
+| Hungry Owl All-Night Grocers       |           57317.39 |
+| Island Trading                     |             6146.3 |
+| K?niglich Essen                    |           31745.75 |
+| La corne d'abondance               | 1992.0500000000002 |
+| La maison d'Asie                   | 10272.350000000002 |
+| Laughing Bacchus Wine Cellars      |              522.5 |
+| Lazy K Kountry Store               |                357 |
+| Lehmanns Marktstand                | 21282.019999999997 |
+| Let's Stop N Shop                  |            3490.02 |
+| LILA-Supermercado                  |           17825.06 |
+| LINO-Delicateses                   | 17889.550000000003 |
+| Lonesome Pine Restaurant           |             4258.6 |
+| M?re Paillarde                     |            32203.9 |
+| Magazzini Alimentari Riuniti       |  7603.849999999999 |
+| Maison Dewey                       |           10430.58 |
+| Morgenstern Gesundkost             |             5042.2 |
+| North/South                        |                649 |
+| Oc?ano Atl?ntico Ltda.             |             3460.2 |
+| Old World Delicatessen             |           16325.15 |
+| Ottilies K?seladen                 |            13157.5 |
+| Pericles Comidas cl?sicas          |             4242.2 |
+| Piccolo und mehr                   |           26259.95 |
+| Princesa Isabel Vinhos             |             5317.1 |
+| Que Del?cia                        |            6973.63 |
+| Queen Cozinha                      | 30226.099999999995 |
+| QUICK-Stop                         | 117483.39000000001 |
+| Rancho grande                      |             2844.1 |
+| Rattlesnake Canyon Grocery         |            52245.9 |
+| Reggiani Caseifici                 |             7555.6 |
+| Ricardo Adocicados                 |            12924.4 |
+| Richter Supermarkt                 | 20033.200000000004 |
+| Romero y tomillo                   |            1467.29 |
+| Sant? Gourmet                      |  5735.150000000001 |
+| Save-a-lot Markets                 |          115673.39 |
+| Seven Seas Imports                 | 17172.049999999996 |
+| Simons bistro                      |           18138.45 |
+| Sp?cialit?s du monde               |            2423.35 |
+| Split Rail Beer & Ale              |            12489.7 |
+| Supr?mes d?lices                   | 24704.399999999998 |
+| The Big Cheese                     |               3361 |
+| The Cracker Box                    |            1947.24 |
+| Toms Spezialit?ten                 |               4954 |
+| Tortuga Restaurante                |           10812.15 |
+| Tradi??o Hipermercados             |            7310.62 |
+| Trail's Head Gourmet Provisioners  | 1571.1999999999998 |
+| Vaffeljernet                       |            16643.8 |
+| Victuailles en stock               |             9937.1 |
+| Vins et alcools Chevalier          |               1480 |
+| Wartian Herkku                     |            16617.1 |
+| Wellington Importadora             |             6480.7 |
+| White Clover Markets               | 29073.450000000004 |
+| Wilman Kala                        |            3161.35 |
+| Wolski  Zajazd                     |            3531.95 |
++------------------------------------+--------------------+
+89 rows in set (0.1343 sec)
+
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select c.companyname, sum(a.unitprice * a.quantity) as total from orderdetails a inner join orders b on a.orderid = b.orderid inner join customers c on  b.customerid = c.customerid group by c.customerid having sum(a.unitprice * a.quantity) >10000;
++------------------------------+--------------------+
+| companyname                  | total              |
++------------------------------+--------------------+
+| Around the Horn              |            13806.5 |
+| Berglunds snabbk?p           | 26968.149999999998 |
+| Blondesddsl p?re et fils     |              19088 |
+| Bon app'                     |           23850.95 |
+| Bottom-Dollar Markets        |            22607.7 |
+| Chop-suey Chinese            |            12886.3 |
+| Eastern Connection           |           15033.66 |
+| Ernst Handel                 |          113236.68 |
+| Folies gourmandes            |            11666.9 |
+| Folk och f? HB               |           32555.55 |
+| Frankenversand               |           28722.71 |
+| Godos Cocina T?pica          |            11830.1 |
+| Great Lakes Food Market      |           19711.13 |
+| Hanari Carnes                |           34101.15 |
+| HILARION-Abastos             | 23611.579999999998 |
+| Hungry Owl All-Night Grocers |           57317.39 |
+| K?niglich Essen              |           31745.75 |
+| La maison d'Asie             | 10272.350000000002 |
+| Lehmanns Marktstand          | 21282.019999999997 |
+| LILA-Supermercado            |           17825.06 |
+| LINO-Delicateses             | 17889.550000000003 |
+| Maison Dewey                 |           10430.58 |
+| M?re Paillarde               |            32203.9 |
+| Old World Delicatessen       |           16325.15 |
+| Ottilies K?seladen           |            13157.5 |
+| Piccolo und mehr             |           26259.95 |
+| Queen Cozinha                | 30226.099999999995 |
+| QUICK-Stop                   | 117483.39000000001 |
+| Rattlesnake Canyon Grocery   |            52245.9 |
+| Ricardo Adocicados           |            12924.4 |
+| Richter Supermarkt           | 20033.200000000004 |
+| Save-a-lot Markets           |          115673.39 |
+| Seven Seas Imports           | 17172.049999999996 |
+| Simons bistro                |           18138.45 |
+| Split Rail Beer & Ale        |            12489.7 |
+| Supr?mes d?lices             | 24704.399999999998 |
+| Tortuga Restaurante          |           10812.15 |
+| Vaffeljernet                 |            16643.8 |
+| Die Wandernde Kuh            |           10653.85 |
+| Wartian Herkku               |            16617.1 |
+| White Clover Markets         | 29073.450000000004 |
++------------------------------+--------------------+
+41 rows in set (0.0170 sec)
+
+
+ MySQL  localhost:3306 ssl  northwind  SQL > select b.productname, sum(a.unitprice * a.quantity) as total from orderdetails a inner join products b on a.productid = b.productid group by a.productid having sum(a.unitprice * a.quantity) >10000;
+
+

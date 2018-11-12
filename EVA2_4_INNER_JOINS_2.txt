@@ -1,0 +1,27 @@
+MySQL  localhost:3306 ssl  northwind  SQL > select a.orderid, b.productname, a.unitprice, a.quantity, (a.unitprice * a.quantity ) as subtotal from orderdetails a inner join products b  on a.productid = b.productid limit 20;
+
++---------+-------------+----------+-----------+----------+--------------+----------------+
+| orderid | productname | quantity | unitprice | subtotal | categoryname | companyname    |
++---------+-------------+----------+-----------+----------+--------------+----------------+
+|   10285 | Chai        |       45 |        18 |      648 | Beverages    | Exotic Liquids |
+|   10294 | Chai        |       18 |        18 |    259.2 | Beverages    | Exotic Liquids |
+|   10317 | Chai        |       20 |        18 |      288 | Beverages    | Exotic Liquids |
+|   10348 | Chai        |       15 |        18 |      216 | Beverages    | Exotic Liquids |
+|   10354 | Chai        |       12 |        18 |    172.8 | Beverages    | Exotic Liquids |
+|   10370 | Chai        |       15 |        18 |      216 | Beverages    | Exotic Liquids |
+|   10406 | Chai        |       10 |        18 |      144 | Beverages    | Exotic Liquids |
+|   10413 | Chai        |       24 |        18 |    345.6 | Beverages    | Exotic Liquids |
+|   10477 | Chai        |       15 |        18 |      216 | Beverages    | Exotic Liquids |
+|   10522 | Chai        |       40 |        18 |      720 | Beverages    | Exotic Liquids |
+|   10526 | Chai        |        8 |        18 |      144 | Beverages    | Exotic Liquids |
+|   10576 | Chai        |       10 |        18 |      180 | Beverages    | Exotic Liquids |
+|   10590 | Chai        |       20 |        18 |      360 | Beverages    | Exotic Liquids |
+|   10609 | Chai        |        3 |        18 |       54 | Beverages    | Exotic Liquids |
+|   10611 | Chai        |        6 |        18 |      108 | Beverages    | Exotic Liquids |
+|   10628 | Chai        |       25 |        18 |      450 | Beverages    | Exotic Liquids |
+|   10646 | Chai        |       15 |        18 |      270 | Beverages    | Exotic Liquids |
+|   10689 | Chai        |       35 |        18 |      630 | Beverages    | Exotic Liquids |
+|   10691 | Chai        |       30 |        18 |      540 | Beverages    | Exotic Liquids |
+|   10700 | Chai        |        5 |        18 |       90 | Beverages    | Exotic Liquids |
++---------+-------------+----------+-----------+----------+--------------+----------------+
+20 rows in set (0.0010 sec)

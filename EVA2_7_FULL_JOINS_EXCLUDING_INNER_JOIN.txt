@@ -1,0 +1,40 @@
+use evaluacion_2;
+show tables;
+select * from tablaa A
+right join tablab B on a.nombre = b.nombre
+where a.nombre is null;
+select * from tablaa A
+left join tablab B on a.nombre = b.nombre
+where b.nombre is null;
+select * from tablaa A
+left join tablab B on a.nombre = b.nombre
+where b.nombre is null;
+union
+select * from tablaa A
+right join tablab B on a.nombre= b.nombre
+where a.nombre is null;
+
+use northwind;
+select * from orderdetails a
+left join products b on a.productid = b.productid
+where b.productid is null
+union
+select * from orderdetails a
+right join products b on a.productid = b.productid
+where a.productid is null;  
+
+select b.orderid, b.customerid, a.companyname from customers a 
+left join orders b on a.customerid = b.customerid
+where b.customerid is null
+union 
+select b.orderid, b.customerid, a.companyname from customers a
+right join orders b on a.customerid = b.customerid
+where a.customerid is null;
+
+select b.orderid, b.customerid, a.companyname from customers a 
+left join orders b on a.customerid = b.customerid
+where b.customerid is null
+union all
+select b.orderid, b.customerid, a.companyname from customers a
+right join orders b on a.customerid = b.customerid
+where a.customerid is null;
